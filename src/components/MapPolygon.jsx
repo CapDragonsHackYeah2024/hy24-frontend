@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import {postData} from "../services/service";
 
 const containerStyle = {
     width: '800px',
@@ -34,6 +35,28 @@ const MapPolygon = () => {
         // Log the coordinates to the console
         console.log(`Marker placed at: Latitude: ${lat}, Longitude: ${lng}`);
     };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const data = {
+            coordinates: [[...markerPosition.lat, markerPosition.lng]],
+            eventType,
+            eventDate,
+            description
+        }
+
+        postData(`https://capdragons.koyeb.app/api/v1/events`, JSON.stringify(data))
+            .then(res => {
+                const {status} = res;
+                if (status.toString().startsWith("4")) {
+                    console.log("error")
+                } else {
+                   console.log("POSTED!")
+                }
+            })
+            .catch(e => console.log(e));
+    }
 
     const onLoad = useCallback(function callback(mapInstance) {
         mapInstance.setZoom(defaultZoomLevel);
