@@ -50,11 +50,6 @@ const MapPolygon = () => {
 
     const onLoad = useCallback(function callback(mapInstance) {
         mapInstance.setZoom(defaultZoomLevel);
-        setMap(mapInstance);
-    }, []);
-
-    const onUnmount = useCallback(function callback(mapInstance) {
-        setMap(null);
     }, []);
     
     const id = openPopover ? 'simple-popover' : undefined;
@@ -65,7 +60,6 @@ const MapPolygon = () => {
             mapContainerStyle={containerStyle}
             center={center}
             onLoad={onLoad}
-            onUnmount={onUnmount}
             mapTypeId="hybrid"
             onClick={handleMapClick}
         >
