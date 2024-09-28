@@ -1,4 +1,5 @@
-import './App.css';
+
+import Navbar from './components/Navbar'
 
 function App() {
   return (
@@ -8,6 +9,13 @@ function App() {
           CapDragons
         </p>
       </header>
+        <Navbar>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/map">
+
+            </a></li>
+            <li><a href="/stuff">Dashboard</a></li>
+        </Navbar>
     </div>
   );
 }

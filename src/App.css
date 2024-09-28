@@ -1,14 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
 .App {
   text-align: center;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  min-height: 3rem;
+}
+
+.spacer {
+  width: 3rem;
+}
+
+body {
+  width: 100%;
+  background-color: #282c34;
+  font-family: "Darker Grotesque", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color: white;
+}
+
+.navbar {
+  height: 100%;
+  color: white;
+}
+
+.navbar li {
+  border: white;
+  list-style-type: none;
+  text-align: left;
+  border-radius: 3px;
+  padding: 1rem;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 2rem;
+}
+
+.navbar li:hover {
+  cursor: pointer;
+  background-color: #4a4f56;
+}
+
+.content-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
 }
