@@ -10,6 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import {postData} from "../services/service";
 
 export default function EventForm({coordinates}) {
     const [eventType, setEventType] = React.useState('');
@@ -20,9 +21,28 @@ export default function EventForm({coordinates}) {
         setEventType(event.target.value);
     };
 
-    const createEvent = () => {
-        console.log(eventType, description, coordinates)
-    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const data = {
+            coordinates,
+            eventType,
+            selectedDate,
+            description
+        }
+
+        postData(`https://capdragons.koyeb.app/api/v1/events`, JSON.stringify(data))
+            .then(res => {
+                const {status} = res;
+                if (status.toString().startsWith("4")) {
+                    console.log("error")
+                } else {
+                    console.log("POSTED!")
+                }
+            })
+            .catch(e => console.log(e));
+    }
 
     return (
         <Box sx={{ minWidth: 240, padding: 2 }}>
@@ -67,7 +87,7 @@ export default function EventForm({coordinates}) {
                     />
                 </LocalizationProvider>
 
-                <Button sx={{ margin: 1 }} onClick={createEvent}>Create!</Button>
+                <Button sx={{ margin: 1 }} onClick={handleSubmit}>Create!</Button>
             </FormControl>
         </Box>
     )
