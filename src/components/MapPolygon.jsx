@@ -60,7 +60,6 @@ const MapPolygon = () => {
             mapContainerStyle={containerStyle}
             center={center}
             onLoad={onLoad}
-            onUnmount={onUnmount}
             mapTypeId="hybrid"
             onClick={handleMapClick}
         >
