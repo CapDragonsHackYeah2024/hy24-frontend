@@ -50,11 +50,6 @@ const MapPolygon = () => {
 
     const onLoad = useCallback(function callback(mapInstance) {
         mapInstance.setZoom(defaultZoomLevel);
-        setMap(mapInstance);
-    }, []);
-
-    const onUnmount = useCallback(function callback(mapInstance) {
-        setMap(null);
     }, []);
     
     const id = openPopover ? 'simple-popover' : undefined;
