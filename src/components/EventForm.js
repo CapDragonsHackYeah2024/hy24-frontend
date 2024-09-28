@@ -27,10 +27,11 @@ export default function EventForm({coordinates}) {
         event.preventDefault();
 
         const data = {
-            coordinates: [[...coordinates.lat, coordinates.lng]],
+            coordinates: `[[${coordinates.lat}, ${coordinates.lng}]]`,
             eventType,
             eventDate: selectedDate,
-            description
+            description,
+            name
         }
 
         postData(`https://capdragons.koyeb.app/api/v1/events`, JSON.stringify(data))
