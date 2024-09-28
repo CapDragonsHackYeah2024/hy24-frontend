@@ -15,6 +15,7 @@ import {postData} from "../services/service";
 export default function EventForm({coordinates}) {
     const [eventType, setEventType] = React.useState('');
     const [description, setDescription] = React.useState('');
+    const [name, setName] = React.useState('');
     const [selectedDate, setSelectedDate] = React.useState(dayjs());
 
     const handleChange = (event) => {
@@ -26,9 +27,9 @@ export default function EventForm({coordinates}) {
         event.preventDefault();
 
         const data = {
-            coordinates,
+            coordinates: [[...coordinates.lat, coordinates.lng]],
             eventType,
-            selectedDate,
+            eventDate: selectedDate,
             description
         }
 
@@ -64,7 +65,16 @@ export default function EventForm({coordinates}) {
                     <MenuItem value="BICYCLE_RIDE">Bicycle ride</MenuItem>
                     <MenuItem value="GREEN_FAIR">Green fair</MenuItem>
                 </Select>
-
+                <TextField
+                    id="outlined-basic2"
+                    label="Name"
+                    variant="outlined"
+                    value={name}
+                    sx={{ margin: 1 }}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setName(event.target.value);
+                    }}
+                />
                 <TextField
                     id="outlined-basic"
                     label="Description"
