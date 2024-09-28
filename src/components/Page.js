@@ -30,7 +30,7 @@ export default function Page({children}) {
                     </p>
                     <div className="spacer"></div>
                 </header>
-                <Container maxWidth="sm">
+                <Container maxWidth="xl">
                     {children}
                 </Container>
             </div>
