@@ -22,8 +22,7 @@ const MapPolygon = () => {
         googleMapsApiKey: 'AIzaSyBp7LbKYjxqdQR022-TfAXBIIRUjN8ChVk',
         version: 'weekly',
     });
-
-    const [map, setMap] = useState(null);
+    
     const [markerPosition, setMarkerPosition] = useState(null);
     const [anchorEl, setAnchorEl] = React.useState({top: 200, left: 200});
     const [openPopover, setOpenPopover] = useState(false)
