@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
 import EventForm from './EventForm';
@@ -16,7 +16,7 @@ const center = {
 
 const defaultZoomLevel = 16;
 
-const MapPolygon = () => {
+const MapPolygon = ({markers, callback}) => {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyBp7LbKYjxqdQR022-TfAXBIIRUjN8ChVk',
@@ -26,6 +26,7 @@ const MapPolygon = () => {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [anchorEl, setAnchorEl] = React.useState({top: 200, left: 200});
     const [openPopover, setOpenPopover] = useState(false)
+    const [selectedMarker, setSelectedMarker] = useState(null)
 
     const handleClose = () => {
         setAnchorEl({top: 300, left: 300});
@@ -51,6 +52,17 @@ const MapPolygon = () => {
     const onLoad = useCallback(function callback(mapInstance) {
         mapInstance.setZoom(defaultZoomLevel);
     }, []);
+
+    const getMarkerPosition = (value) => {
+        const coords = JSON.parse(value);
+        return {lat: coords[0][0], lng: coords[0][1]}
+    }
+
+    const getMarkerPosition2 = (value) => {
+        console.log(value)
+        // const coords = JSON.parse(value);
+        // return {lat: coords[0][0], lng: coords[0][1]}
+    }
     
     const id = openPopover ? 'simple-popover' : undefined;
 
@@ -66,6 +78,28 @@ const MapPolygon = () => {
             {/* Render the marker when markerPosition is available */}
             {markerPosition && (
                 <Marker position={markerPosition} />
+            )}
+
+            {markers.map((marker, index) => (
+                <Marker
+                    key={index}
+                    position={getMarkerPosition(marker.coordinates)}
+                    onClick={() => setSelectedMarker(marker)}  // Set the selected marker on click
+                />
+            ))}
+
+            {selectedMarker && (
+                <InfoWindow
+                    position={getMarkerPosition(selectedMarker.coordinates)}
+                    onCloseClick={() => setSelectedMarker(null)}  // Close InfoWindow when 'X' is clicked
+                >
+                    <div>
+                        <h2>Name: {selectedMarker.name}</h2>
+                        <p>Type: {selectedMarker.eventType}</p>
+                        <p>Description: {selectedMarker.description}</p>
+                        {/*<p>Date: {selectedMarker.eventDate}</p>*/}
+                    </div>
+                </InfoWindow>
             )}
         </GoogleMap>
         <Popover
@@ -84,7 +118,7 @@ const MapPolygon = () => {
             }}
         >
             <Button onClick={handleClose}>Close me!</Button>
-            <EventForm coordinates={markerPosition} />
+            <EventForm coordinates={markerPosition} callback={callback} />
         </Popover>
         </>
     ) : <></>;
