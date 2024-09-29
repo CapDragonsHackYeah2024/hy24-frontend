@@ -12,11 +12,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import {postData} from "../services/service";
 
-export default function EventForm({coordinates}) {
+export default function EventForm({coordinates, callback}) {
     const [eventType, setEventType] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [name, setName] = React.useState('');
     const [selectedDate, setSelectedDate] = React.useState(dayjs());
+    // const [posted, setPosted] = React.useState(false);
 
     const handleChange = (event) => {
         setEventType(event.target.value);
@@ -37,10 +38,11 @@ export default function EventForm({coordinates}) {
         postData(`https://capdragons.koyeb.app/api/v1/events`, JSON.stringify(data))
             .then(res => {
                 const {status} = res;
-                if (status.toString().startsWith("4")) {
+                if (status && status.toString().startsWith("4")) {
                     console.log("error")
                 } else {
                     console.log("POSTED!")
+                    callback();
                 }
             })
             .catch(e => console.log(e));
