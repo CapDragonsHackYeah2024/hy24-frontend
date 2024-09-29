@@ -57,12 +57,6 @@ const MapPolygon = ({markers, callback}) => {
         const coords = JSON.parse(value);
         return {lat: coords[0][0], lng: coords[0][1]}
     }
-
-    const getMarkerPosition2 = (value) => {
-        console.log(value)
-        // const coords = JSON.parse(value);
-        // return {lat: coords[0][0], lng: coords[0][1]}
-    }
     
     const id = openPopover ? 'simple-popover' : undefined;
 
